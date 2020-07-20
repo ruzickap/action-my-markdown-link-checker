@@ -1,0 +1,48 @@
+name: markdown
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - '**.md'
+      - .github/workflows/markdown.yml
+      - .markdownlint.yml
+  push:
+    branches:
+      - master
+    paths:
+      - '**.md'
+      - .github/workflows/markdown.yml
+      - .markdownlint.yml
+
+jobs:
+  markdown_lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Markdown Lint
+        uses: ruzickap/action-my-markdown-linter@v1
+        with:
+          exclude: |
+            tests/
+            CHANGELOG.md
+
+      - name: Markdown Lint using pre-built container
+        uses: docker://peru/my-markdown-linter
+        with:
+          exclude: |
+            tests/
+            CHANGELOG.md
+
+  markdown-link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Link Checker
+        uses: ruzickap/action-my-markdown-link-checker@v1
+        with:
+          exclude: |
+            tests/
+            CHANGELOG.md
