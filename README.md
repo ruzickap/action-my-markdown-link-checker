@@ -14,14 +14,14 @@ and [fd](https://github.com/sharkdp/fd).
 See the basic GitHub Action example:
 
 ```yaml
-name: markdown_link_check
+name: markdown-link-check
 
 on:
   push:
 
 name: Check markdown files for broken links
 jobs:
-  markdown_link_check:
+  markdown-link-check:
     name: Check markdown files
     runs-on: ubuntu-latest
     steps:
@@ -38,11 +38,11 @@ Variables used by `action-my-markdown-link-checker` GitHub Action:
 | Variable        | Default                                             | Description                                                                                                                                                                        |
 | --------------- | ----------------------------------------------------| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `config_file`   | (not defined)                                       | [Config file](https://github.com/tcort/markdown-link-check#config-file-format) used by [markdown-link-check](https://github.com/tcort/markdown-link-check)                         |
-| `debug`         | (not defined)                                       | Enable debug mode for the [entrypoint.sh](entrypoint.sh) script (`set -x`)                                                                                                         |
+| `debug`         | (not defined)                                       | Enable debug mode for the [entrypoint.sh](entrypoint.sh) script (`set -x`) and `--verbose` for [markdown-link-check](https://github.com/tcort/markdown-link-check)                 |
 | `exclude`       | (not defined)                                       | Exclude files or directories - see the [--exclude parameter](https://github.com/sharkdp/fd#excluding-specific-files-or-directories) of [fd](https://github.com/sharkdp/fd) command |
 | `fd_cmd_params` | `. -0 --extension md --type f --hidden --no-ignore` | Set your own parameters for [fd](https://github.com/sharkdp/fd) command. `exclude` and `search_paths` parameters are ignored if this is set.                                       |
 | `quiet`         | (not defined)                                       | Display errors only                                                                                                                                                                |
-| `search_paths`  | (not defined)                                       | By default all `*.md` are checked in whole repository, but you can specify your directories                                                                                        |
+| `search_paths`  | (not defined)                                       | By default all `*.md` are checked in whole repository, but you can specify directories                                                                                             |
 | `verbose`       | (not defined)                                       | Displays detailed error information                                                                                                                                                |
 
 Non of the parameters above are "mandatory".
@@ -52,7 +52,7 @@ Non of the parameters above are "mandatory".
 GitHub Action example:
 
 ```yaml
-name: markdown_link_check
+name: markdown-link-check
 
 on:
   push:
@@ -60,7 +60,7 @@ on:
       - master
 
 jobs:
-  markdown_link_check:
+  markdown-link-check:
   name: Check markdown files for broken links
     runs-on: ubuntu-latest
     steps:
@@ -93,6 +93,25 @@ jobs:
 
       - name: Markdown links check using pre-built container
         uses: docker://peru/my-markdown-link-checker@v1
+```
+
+Example with periodic runs (run as Cron):
+
+```yaml
+name: periodic-markdown-link-check
+
+on:
+  schedule:
+    - cron: '8 8 * * 2'
+
+jobs:
+  markdown-link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Markdown links check
+        uses: ruzickap/action-my-markdown-link-checker@v1
 ```
 
 ## Running locally
@@ -144,7 +163,7 @@ FILE: tests/test2/normal.md
 *** Checks completed...
 ```
 
-The example with broken links may look like:
+The example with broken links may looks like:
 
 ```shell
 docker run --rm -t -e INPUT_SEARCH_PATHS -e INPUT_VERBOSE -v "${PWD}:/mnt" peru/my-markdown-link-checker
@@ -180,3 +199,11 @@ ERROR: 1 dead links found!
 [✖] https://non-existing-domain.com → Status: 0
 *** ERROR: Something went wrong - see the errors above...
 ```
+
+## Similar projects
+
+* [https://github.com/gaurav-nelson/github-action-markdown-link-check](https://github.com/gaurav-nelson/github-action-markdown-link-check)
+  * great project with missing "exclude/skip files" functionality (as of now 2020-07-20)
+* [https://github.com/ocular-d/md-linkcheck-action](https://github.com/ocular-d/md-linkcheck-action)
+  * similar project with not enough advanced features
+* [https://github.com/peter-evans/link-checker](https://github.com/peter-evans/link-checker)
