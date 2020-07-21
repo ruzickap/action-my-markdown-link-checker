@@ -1,5 +1,13 @@
 # Changelog
 
+## [v1.0.1](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.0.0...v1.0.1) (2020-07-21)
+
+- Add demo to README + demo script [`#8`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/8)
+- Add .mlc_config.json test [`#7`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/7)
+- Add .mlc_config.json as default config for markdown-link-check [`#6`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/6)
+- Add markdown GH Action checking md files [`#5`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/5)
+- CHANGELOG file update [`#4`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/4)
+
 ## v1.0.0 (2020-07-20)
 
 - Update README [`#3`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/3)
