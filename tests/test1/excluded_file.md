@@ -1,3 +1,3 @@
 # Exclude Markdown file
 
-[https://google.com](https://google.com)
+[https://gmail.com](https://gmail.com)

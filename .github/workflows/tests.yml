@@ -31,14 +31,32 @@ jobs:
           debug: true
           search_paths: tests/test2
 
-      - name: Test 2 - Check with "exclude" and "search_paths" - tests/test2/normal.md
+      - name: Test 2 - Check with "exclude", "search_paths" and "quiet" - tests/test2/normal.md
         uses: ./
         with:
-          debug: true
           exclude: |
             CHANGELOG.md
             test1/excluded_file.md
             bad.md
-            excluded_dir/
           search_paths: tests/
           quiet: true
+
+      - name: Create config file for markdown-link-check in "Test 3"
+        run: |
+          cat > .mlc_config.json << EOF
+          {
+            "ignorePatterns": [
+              {
+                "pattern": "^https://non-existing-domain.com"
+              }
+            ]
+          }
+          EOF
+
+      - name: Test 3 - Check with "search_paths", "verbose" and ".mlc_config.json" - "https://non-existing-domain.com" is ignored
+        uses: ./
+        with:
+          search_paths: |
+            tests/test1
+            tests/test2
+          verbose: true
