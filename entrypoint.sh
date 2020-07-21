@@ -49,6 +49,8 @@ declare -a MARKDOWN_LINK_CHECK_CMD_PARAMS
 
 if [ -n "${CONFIG_FILE}" ]; then
   MARKDOWN_LINK_CHECK_CMD_PARAMS+=("--config" "${CONFIG_FILE}")
+elif [ -s .mlc_config.json ]; then
+  MARKDOWN_LINK_CHECK_CMD_PARAMS+=("--config" ".mlc_config.json")
 fi
 
 if [ -n "${QUIET}" ]; then
