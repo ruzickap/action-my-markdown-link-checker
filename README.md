@@ -207,6 +207,10 @@ ERROR: 1 dead links found!
 *** ERROR: Something went wrong - see the errors above...
 ```
 
+Demo:
+
+[![My Markdown Link Checker](https://asciinema.org/a/348733.svg)](https://asciinema.org/a/348733)
+
 ## Similar projects
 
 * [https://github.com/gaurav-nelson/github-action-markdown-link-check](https://github.com/gaurav-nelson/github-action-markdown-link-check)
