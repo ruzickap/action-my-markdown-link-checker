@@ -211,6 +211,22 @@ Demo:
 
 [![My Markdown Link Checker](https://asciinema.org/a/348733.svg)](https://asciinema.org/a/348733)
 
+## Examples
+
+### Periodic checks
+
+| Repository                                                                                   | Code                                                                                                                                                            | GitHub Action                                                                                                                               |
+|----------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| [packer-tamplates](https://github.com/ruzickap/packer-templates)                             | [periodic-markdown-links-check.yml](https://github.com/ruzickap/packer-templates/blob/master/.github/workflows/periodic-markdown-links-check.yml)               | [periodic-markdown-links-check/markdown-link-check/Link Checker](https://github.com/ruzickap/packer-templates/runs/893812733)               |
+| [darktable_video_tutorials_list](https://github.com/ruzickap/darktable_video_tutorials_list) | [periodic-markdown-links-check.yml](https://github.com/ruzickap/darktable_video_tutorials_list/blob/master/.github/workflows/periodic-markdown-links-check.yml) | [periodic-markdown-links-check/markdown-link-check/Link Checker](https://github.com/ruzickap/darktable_video_tutorials_list/runs/890054136) |
+
+### Markdown checks
+
+| Repository                                                                         | Code                                                                                                                                                       | GitHub Action                                                                                                     |
+|------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| [k8s-istio-demo](https://github.com/ruzickap/k8s-istio-demo)                       | [checks.yml](https://github.com/ruzickap/k8s-istio-demo/blob/6d925a9e800d14508ce2a1e45bb2035ea1de3b3a/.github/workflows/checks.yml#L51-L61)                | [checks/markdown-link-check/Link Checker](https://github.com/ruzickap/k8s-istio-demo/runs/890106973)              |
+| [action-my-markdown-linter](https://github.com/ruzickap/action-my-markdown-linter) | [markdown.yml](https://github.com/ruzickap/action-my-markdown-linter/blob/fd89cda062083b2e4cac6afa90113f1a03ec8d07/.github/workflows/markdown.yml#L38-L47) | [markdown/markdown-link-check/Link Checker](https://github.com/ruzickap/action-my-markdown-linter/runs/893181508) |
+
 ## Similar projects
 
 * [https://github.com/gaurav-nelson/github-action-markdown-link-check](https://github.com/gaurav-nelson/github-action-markdown-link-check)
