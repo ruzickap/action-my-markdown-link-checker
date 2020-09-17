@@ -1,5 +1,12 @@
 # Changelog
 
+## [v1.0.2](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.0.1...v1.0.2) (2020-09-17)
+
+- Fix super-linter configuration [`#12`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/12)
+- Update README and set markdown-link-check version in Dockerfile [`#11`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/11)
+- Add examples to README [`#10`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/10)
+- CHANGELOG file update [`#9`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/9)
+
 ## [v1.0.1](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.0.0...v1.0.1) (2020-07-21)
 
 - Add demo to README + demo script [`#8`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/8)
