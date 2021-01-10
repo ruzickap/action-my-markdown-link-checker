@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -Eeuo pipefail
 
 # Config file for markdown-link-check
 export CONFIG_FILE=${INPUT_CONFIG_FILE:-}
