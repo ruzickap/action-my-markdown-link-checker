@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.0.3](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.0.2...v1.0.3) (2021-04-02)
+
+- Update markdown-link-check [`#15`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/15)
+- Upgrade markdown-link-check to 3.8.6 [`#14`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/14)
+- CHANGELOG file update [`#13`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/13)
+
 ## [v1.0.2](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.0.1...v1.0.2) (2020-09-17)
 
 - Fix super-linter configuration [`#12`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/12)
