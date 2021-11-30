@@ -123,7 +123,7 @@ jobs:
 
 ## Running locally
 
-It's possible to use the markdown link checks locally using docker:
+It's possible to use the Markdown link checks locally using docker:
 
 ```bash
 docker run --rm -t -v "${PWD}/tests/test2:/mnt" peru/my-markdown-link-checker
