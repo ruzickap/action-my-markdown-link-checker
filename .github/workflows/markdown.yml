@@ -9,7 +9,7 @@ on:
       - .markdownlint.yml
   push:
     branches:
-      - master
+      - main
     paths:
       - '**.md'
       - .github/workflows/markdown.yml
