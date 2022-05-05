@@ -1,6 +1,10 @@
 # Changelog
 
-## [v1.0.5](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.0.4...v1.0.5)
+## [v1.0.6](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.0.5...v1.0.6)
+
+- Fix markdown-link-check [`2112e8b`](https://github.com/ruzickap/action-my-markdown-link-checker/commit/2112e8b06f07b5f338ee62637b08b52119c1568d)
+
+## [v1.0.5](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.0.4...v1.0.5) (2022-05-05)
 
 - Update markdown-link-check [`#25`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/25)
 - Update markdown-link-check [`#22`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/22)
