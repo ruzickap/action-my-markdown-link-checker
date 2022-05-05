@@ -1,5 +1,10 @@
 # Changelog
 
+## [v1.0.5](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.0.4...v1.0.5)
+
+- Update markdown-link-check [`#25`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/25)
+- Update markdown-link-check [`#22`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/22)
+
 ## [v1.0.4](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.0.3...v1.0.4) (2021-12-24)
 
 - Move from master to main [`#20`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/20)
