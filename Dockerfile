@@ -10,17 +10,13 @@ LABEL "com.github.actions.icon"="list"
 LABEL "com.github.actions.color"="blue"
 
 # Comment to use latest version
-ENV MARKDOWNLINT_LINK_CHECK_VERSION="v3.10.2"
+ENV MARKDOWNLINT_LINK_CHECK_VERSION="3.10.2"
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
 RUN set -eux && \
     apk --update --no-cache add bash fd && \
-    if [ -n "${MARKDOWNLINT_LINK_CHECK_VERSION+x}" ] ; then \
-      npm install --global --production "markdown-link-check@${MARKDOWNLINT_LINK_CHECK_VERSION}" ; \
-    else \
-      npm install --global --production markdown-link-check ; \
-    fi
+    npm install --global --production "markdown-link-check@v${MARKDOWNLINT_LINK_CHECK_VERSION}"
 
 COPY entrypoint.sh /entrypoint.sh
 
