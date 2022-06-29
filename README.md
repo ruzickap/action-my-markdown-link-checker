@@ -45,7 +45,7 @@ Variables used by `action-my-markdown-link-checker` GitHub Action:
 | `search_paths`  | (not defined)                                       | By default all `*.md` are checked in whole repository, but you can specify directories                                                                                             |
 | `verbose`       | (not defined)                                       | Displays detailed error information                                                                                                                                                |
 
-Non of the parameters above are "mandatory".
+None of the parameters above are "mandatory".
 
 In case you need to exclude/ignore some domains, add headers, form being checked
 you need to use the [config_file](https://github.com/tcort/markdown-link-check#config-file-format)
