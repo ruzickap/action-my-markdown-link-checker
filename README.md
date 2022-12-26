@@ -19,7 +19,6 @@ name: markdown-link-check
 on:
   push:
 
-name: Check markdown files for broken links
 jobs:
   markdown-link-check:
     name: Check markdown files
