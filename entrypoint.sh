@@ -63,29 +63,16 @@ fi
 
 print_info "Start checking..."
 
-IFS=' ' read -r -a FD_CMD_PARAMS <<< "$FD_CMD_PARAMS"
-
-# Change FD_CMD_PARAMS variable only if INPUT_FD_CMD_PARAMS was not defined or is empty
-if [ -z "${INPUT_FD_CMD_PARAMS+x}" ] || [ -z "${INPUT_FD_CMD_PARAMS}" ]; then
-  if [ -n "${EXCLUDE}" ]; then
-    for EXCLUDED in ${EXCLUDE}; do
-      FD_CMD_PARAMS+=("--exclude" "${EXCLUDED}")
-    done
-  fi
-
-  if [ -n "${SEARCH_PATHS}" ]; then
-    for SEARCH_PATH in ${SEARCH_PATHS}; do
-      FD_CMD_PARAMS+=("${SEARCH_PATH}")
-    done
-  fi
+if [ -n "${EXCLUDE}" ]; then
+  print_info "Files/dirs which will be excluded:\n${EXCLUDE}"
 fi
 
-print_info "Running: fd ${FD_CMD_PARAMS[*]}"
+echo "${EXCLUDE}" > /tmp/fd_exclude_file
 
-while IFS= read -r -d '' FILE; do
-  print_info "Running: markdown-link-check ${MARKDOWN_LINK_CHECK_CMD_PARAMS[*]} ${FILE}"
-  markdown-link-check "${MARKDOWN_LINK_CHECK_CMD_PARAMS[@]}" "${FILE}"
-  echo -e '\n'
-done < <(fd "${FD_CMD_PARAMS[@]}")
+# shellcheck disable=SC2086
+mapfile -d '' MARKDOWN_FILE_ARRAY < <(fd ${FD_CMD_PARAMS} --ignore-file /tmp/fd_exclude_file ${SEARCH_PATHS})
+
+print_info "Running: markdown-link-check ${MARKDOWN_LINK_CHECK_CMD_PARAMS[*]} ${MARKDOWN_FILE_ARRAY[*]}"
+markdown-link-check "${MARKDOWN_LINK_CHECK_CMD_PARAMS[@]}" "${MARKDOWN_FILE_ARRAY[@]}"
 
 print_info "Checks completed..."
