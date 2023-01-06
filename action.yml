@@ -1,24 +1,24 @@
-name: 'My Markdown Link Checker'
-description: 'Check markdown files for broken links'
-author: 'ruzickap'
+name: "My Markdown Link Checker"
+description: "Check markdown files for broken links"
+author: "ruzickap"
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: "docker"
+  image: "Dockerfile"
 branding:
-  icon: 'list'
-  color: 'blue'
+  icon: "list"
+  color: "blue"
 inputs:
   config_file:
-    description: 'markdown-link-check config file'
+    description: "markdown-link-check config file"
   debug:
-    description: 'Debug mode'
+    description: "Debug mode"
   exclude:
-    description: 'Exclude files or directories'
+    description: "Exclude files or directories"
   fd_cmd_params:
     description: 'Command line parameters for fd command. "exclude" and "search_paths" parameters are ignored if this is set'
   quiet:
-    description: 'Quiet mode for markdown-link-check'
+    description: "Quiet mode for markdown-link-check"
   search_paths:
     description: 'Set paths which should be recursively scanned for markdown files (*.md) and linted. By default all "*.md" files are checked'
   verbose:
-    description: 'Verbose mode for markdown-link-check'
+    description: "Verbose mode for markdown-link-check"
