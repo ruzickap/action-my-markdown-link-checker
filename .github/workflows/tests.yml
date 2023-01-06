@@ -38,10 +38,19 @@ jobs:
             CHANGELOG.md
             test1/excluded_file.md
             bad.md
+            tests/test3-multiple-files/
           search_paths: tests/
           quiet: true
 
-      - name: Create config file for markdown-link-check in "Test 3"
+      # https://github.com/ruzickap/action-my-markdown-link-checker/issues/45
+      - name: Test 3 - Check "all" files
+        continue-on-error: true
+        uses: ./
+        with:
+          debug: true
+          search_paths: tests
+
+      - name: Create config file for markdown-link-check in "Test 4"
         run: |
           cat > .mlc_config.json << EOF
           {
@@ -53,7 +62,7 @@ jobs:
           }
           EOF
 
-      - name: Test 3 - Check with "search_paths", "verbose" and ".mlc_config.json" - "https://non-existing-domain.com" is ignored
+      - name: Test 4 - Check with "search_paths", "verbose" and ".mlc_config.json" - "https://non-existing-domain.com" is ignored
         uses: ./
         with:
           search_paths: |
