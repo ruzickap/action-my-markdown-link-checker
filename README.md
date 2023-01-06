@@ -35,7 +35,7 @@ jobs:
 Variables used by `action-my-markdown-link-checker` GitHub Action:
 
 | Variable        | Default                                             | Description                                                                                                                                                                        |
-| --------------- | ----------------------------------------------------| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|-----------------|-----------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `config_file`   | `.mlc_config.json` (if exists)                      | [Config file](https://github.com/tcort/markdown-link-check#config-file-format) used by [markdown-link-check](https://github.com/tcort/markdown-link-check)                         |
 | `debug`         | (not defined)                                       | Enable debug mode for the [entrypoint.sh](entrypoint.sh) script (`set -x`) and `--verbose` for [markdown-link-check](https://github.com/tcort/markdown-link-check)                 |
 | `exclude`       | (not defined)                                       | Exclude files or directories - see the [--exclude parameter](https://github.com/sharkdp/fd#excluding-specific-files-or-directories) of [fd](https://github.com/sharkdp/fd) command |

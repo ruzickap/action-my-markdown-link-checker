@@ -23,7 +23,6 @@ export SEARCH_PATHS=${INPUT_SEARCH_PATHS:-}
 # Debug variable - enable by setting non-empty value
 export VERBOSE=${INPUT_VERBOSE:-}
 
-
 print_error() {
   echo -e "\e[31m*** ERROR: ${1}\e[m"
 }

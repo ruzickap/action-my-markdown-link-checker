@@ -4,15 +4,14 @@ on:
   workflow_dispatch:
     inputs:
       dryRun:
-        type: choice
+        type: boolean
         description: "Dry-Run"
-        default: "false"
-        options:
-          - true
-          - false
+        required: false
+        default: false
       logLevel:
         type: choice
         description: "Log-Level"
+        required: false
         default: "debug"
         options:
           - info
@@ -22,7 +21,8 @@ on:
     branches:
       - main
     paths:
-      - ".github/renovate.json5"
+      - .github/workflows/renovate.yml
+      - .github/renovate.json5
   schedule:
     - cron: "0 0,2,4 * * 0"
 
