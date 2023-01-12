@@ -20,7 +20,7 @@ RUN set -eux && \
 
 COPY entrypoint.sh /entrypoint.sh
 
-USER guest
+USER nobody
 
 WORKDIR /mnt
 ENTRYPOINT [ "/entrypoint.sh" ]
