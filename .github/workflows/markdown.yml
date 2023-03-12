@@ -15,6 +15,8 @@ on:
       - .github/workflows/markdown.yml
       - .markdownlint.yml
 
+permissions: read-all
+
 jobs:
   markdown_lint:
     runs-on: ubuntu-latest

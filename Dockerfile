@@ -23,4 +23,7 @@ COPY entrypoint.sh /entrypoint.sh
 USER nobody
 
 WORKDIR /mnt
+
+HEALTHCHECK NONE
+
 ENTRYPOINT [ "/entrypoint.sh" ]

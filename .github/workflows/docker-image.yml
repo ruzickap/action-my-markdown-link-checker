@@ -17,6 +17,8 @@ on:
       - entrypoint.sh
       - .github/workflows/docker-image.yml
 
+permissions: read-all
+
 jobs:
   docker-build-test:
     runs-on: ubuntu-latest

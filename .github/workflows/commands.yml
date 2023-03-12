@@ -13,6 +13,8 @@ on:
       - README.md
       - .github/workflows/check-commands.yml
 
+permissions: read-all
+
 jobs:
   command-check:
     runs-on: ubuntu-latest
