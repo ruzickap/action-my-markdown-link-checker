@@ -12,6 +12,9 @@ jobs:
   build:
     name: MegaLinter
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      statuses: write
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -41,5 +44,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MARKDOWN_MARKDOWN_LINK_CHECK_FILTER_REGEX_EXCLUDE: tests
           PRINT_ALPACA: false
+          # Unpinned Package Version in Apk Add, NPM Install Command Without Pinned Version
+          REPOSITORY_KICS_ARGUMENTS: --exclude-paths .github/workflows/renovate.yml --exclude-queries=d3499f6d-1651-41bb-a9a7-de925fea487b,e36d8880-3f78-4546-b9a1-12f0745ca0d5
           SARIF_REPORTER: true
           VALIDATE_ALL_CODEBASE: true
