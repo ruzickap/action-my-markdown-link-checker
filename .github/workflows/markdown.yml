@@ -21,7 +21,7 @@ jobs:
   markdown_lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Markdown Lint
         uses: ruzickap/action-my-markdown-linter@v1
@@ -40,7 +40,7 @@ jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Link Checker
         uses: ruzickap/action-my-markdown-link-checker@v1
