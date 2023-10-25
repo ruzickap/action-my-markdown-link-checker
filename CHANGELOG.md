@@ -1,11 +1,16 @@
 # Changelog
 
-## [v1.1.1](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.1.0...v1.1.1)
+## [v1.1.2](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.1.1...v1.1.2)
+
+- feat(gh_actions): fix update-semver permissions [`0d99c8d`](https://github.com/ruzickap/action-my-markdown-link-checker/commit/0d99c8d0a0db064ee451d405e8b7acc9f0383d4a)
+
+## [v1.1.1](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.1.0...v1.1.1) (2023-10-25)
 
 - chore(deps): update megalinter/megalinter action to v7.4.0 [`#62`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/62)
 - refactor(renovate): remove branchPrefix from renovate.json5 [`#61`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/61)
 - chore(deps): update megalinter/megalinter action to v7.2.1 [`#59`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/59)
 - chore(deps): update megalinter/megalinter action to v7 [`#58`](https://github.com/ruzickap/action-my-markdown-link-checker/pull/58)
+- docs(changelog): CHANGELOG file update [skip ci] [`f5429f5`](https://github.com/ruzickap/action-my-markdown-link-checker/commit/f5429f502189f77e506e5f259458561c16dc61b2)
 - chore(deps): update tibdex/github-app-token action to v2 [`7093a52`](https://github.com/ruzickap/action-my-markdown-link-checker/commit/7093a52c1915d5a00f364736f210e49cefab2f0c)
 - chore(deps): update actions/checkout action to v4 [`b13dcc5`](https://github.com/ruzickap/action-my-markdown-link-checker/commit/b13dcc5a2a93b4a00910075e864c848b7090fbad)
 - chore(deps): update megalinter/megalinter action to v7.3.0 [`929cd45`](https://github.com/ruzickap/action-my-markdown-link-checker/commit/929cd451ddf676ff1f5d22918d08cd5c17df172f)
