@@ -1,4 +1,4 @@
-FROM node:current-alpine
+FROM node:21.2-alpine3.18
 
 LABEL maintainer="Petr Ruzicka <petr.ruzicka@gmail.com>"
 LABEL repository="https://github.com/ruzickap/action-my-markdown-link-checker"
