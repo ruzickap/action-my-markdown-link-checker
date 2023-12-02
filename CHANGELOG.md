@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.1.2...v1.2.0) (2023-12-02)
+
+
+### Features
+
+* **gha:** add release-please, format renovate.json5, del update-semver ([3ed2c62](https://github.com/ruzickap/action-my-markdown-link-checker/commit/3ed2c623408f36eb0f51dd6c780850b117b88329))
+
 ## [v1.1.2](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.1.1...v1.1.2)
 
 - feat(gh_actions): fix update-semver permissions [`0d99c8d`](https://github.com/ruzickap/action-my-markdown-link-checker/commit/0d99c8d0a0db064ee451d405e8b7acc9f0383d4a)
