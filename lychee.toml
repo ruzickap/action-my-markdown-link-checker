@@ -24,6 +24,8 @@ accept = [999]
 # Exclude URLs and mail addresses from checking (supports regex)
 # https://github.com/cotes2020/jekyll-theme-chirpy/issues/758
 exclude = [
+  # Ignore Docker Hub
+  'https://hub.docker.com',
   'https://non-existing-domain.com/',
 ]
 
