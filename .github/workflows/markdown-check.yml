@@ -1,37 +1,30 @@
-name: markdown
+name: markdown-check
 
 on:
   pull_request:
     types: [opened, synchronize]
     paths:
       - "**.md"
-      - .github/workflows/markdown.yml
+      - .github/workflows/markdown-check.yml
       - .markdownlint.yml
   push:
     branches:
       - main
     paths:
       - "**.md"
-      - .github/workflows/markdown.yml
+      - .github/workflows/markdown-check.yml
       - .markdownlint.yml
 
 permissions: read-all
 
 jobs:
-  markdown_lint:
+  markdownlint-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Markdown Lint
-        uses: ruzickap/action-my-markdown-linter@v1
-        with:
-          exclude: |
-            tests/
-            CHANGELOG.md
-
-      - name: Markdown Lint using pre-built container
-        uses: docker://peru/my-markdown-linter
+        uses: ruzickap/action-my-markdown-linter@919d3735df9bbc094d206521a774133ec8f3c4ca # v1.1.0
         with:
           exclude: |
             tests/
@@ -40,10 +33,10 @@ jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Link Checker
-        uses: ruzickap/action-my-markdown-link-checker@v1
+        uses: ruzickap/action-my-markdown-link-checker@e7e8635735a15a86b081f8255022bcc251cc9003 # v1.2.0
         with:
           exclude: |
             tests/

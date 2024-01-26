@@ -25,15 +25,18 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Test 1 - Check done in tests/test2 - tests/test2/normal.md
+        # Unpinned Actions Full Length Commit SHA
+        # kics-scan ignore-line
         uses: ./
         with:
           debug: true
           search_paths: tests/test2
 
       - name: Test 2 - Check with "exclude", "search_paths" and "quiet" - tests/test2/normal.md
+        # kics-scan ignore-line
         uses: ./
         with:
           exclude: |
@@ -44,9 +47,9 @@ jobs:
           search_paths: tests/
           quiet: true
 
-      # https://github.com/ruzickap/action-my-markdown-link-checker/issues/45
       - name: Test 3 - Check "all" files
         continue-on-error: true
+        # kics-scan ignore-line
         uses: ./
         with:
           debug: true
@@ -65,6 +68,7 @@ jobs:
           EOF
 
       - name: Test 4 - Check with "search_paths", "verbose" and ".mlc_config.json" - "https://non-existing-domain.com" is ignored
+        # kics-scan ignore-line
         uses: ./
         with:
           search_paths: |
