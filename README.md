@@ -24,7 +24,7 @@ jobs:
     name: Check markdown files
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Markdown links check
         uses: ruzickap/action-my-markdown-link-checker@v1
@@ -70,7 +70,7 @@ jobs:
   name: Check markdown files for broken links
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Markdown links check
         uses: ruzickap/action-my-markdown-link-checker@v1
@@ -114,7 +114,7 @@ jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Markdown links check
         uses: ruzickap/action-my-markdown-link-checker@v1
