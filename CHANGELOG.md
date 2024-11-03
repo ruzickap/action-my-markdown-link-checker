@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.3.0...v1.4.0) (2024-11-03)
+
+
+### Features
+
+* add GitHub default templates ([#86](https://github.com/ruzickap/action-my-markdown-link-checker/issues/86)) ([1c6b041](https://github.com/ruzickap/action-my-markdown-link-checker/commit/1c6b041de33238096c9ac0e820cb0a690ad67d94))
+
 ## [1.3.0](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.2.0...v1.3.0) (2024-05-26)
 
 
