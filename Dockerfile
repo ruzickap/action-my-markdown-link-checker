@@ -10,7 +10,7 @@ LABEL "com.github.actions.icon"="list"
 LABEL "com.github.actions.color"="blue"
 
 # renovate: datasource=npm depName=markdown-link-check versioning=npm
-ENV MARKDOWNLINT_LINK_CHECK_VERSION="3.13.6"
+ENV MARKDOWNLINT_LINK_CHECK_VERSION="3.13.7"
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
