@@ -1,4 +1,4 @@
-FROM node:current-alpine@sha256:0324faef815aea5b6d84c988f8cc3ca16169203944e01fdb79e90c747f4a36e0
+FROM node:current-alpine@sha256:a7a9281d22c3867fa76f6714020ccf7ec060f6fa161fe8c5d0f5f79766601016
 
 LABEL maintainer="Petr Ruzicka <petr.ruzicka@gmail.com>"
 LABEL repository="https://github.com/ruzickap/action-my-markdown-link-checker"
