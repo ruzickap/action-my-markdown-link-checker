@@ -34,22 +34,21 @@ jobs:
 
 Variables used by `action-my-markdown-link-checker` GitHub Action:
 
-| Variable        | Default                                             | Description                                                                                                                                                                 |
-|-----------------|-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `config_file`   | `.mlc_config.json` (if exists)                      | [Config file](https://github.com/tcort/markdown-link-check#config-file-format) used by [markdown-link-check](https://github.com/tcort/markdown-link-check)                  |
-| `debug`         | (not defined)                                       | Enable debug mode for the [entrypoint.sh](entrypoint.sh) script (`set -x`) and `--verbose` for [markdown-link-check](https://github.com/tcort/markdown-link-check)          |
-| `exclude`       | (not defined)                                       | Exclude files or directories - see the [--exclude parameter](https://github.com/sharkdp/fd#excluding-specific-files-or-directories) of [fd](https://github.com/sharkdp/fd)  |
-| `fd_cmd_params` | `. -0 --extension md --type f --hidden --no-ignore` | Set your own parameters for [fd](https://github.com/sharkdp/fd) command. `exclude` and `search_paths` parameters are ignored if this is set.                                |
-| `quiet`         | (not defined)                                       | Display errors only                                                                                                                                                         |
+| Variable        | Default                                             | Description                                                                                                                                                                |
+|-----------------|-----------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `config_file`   | `.mlc_config.json` (if exists)                      | [Config file](https://github.com/tcort/markdown-link-check#config-file-format) used by [markdown-link-check](https://github.com/tcort/markdown-link-check)                 |
+| `debug`         | (not defined)                                       | Enable debug mode for the [entrypoint.sh](entrypoint.sh) script (`set -x`) and `--verbose` for [markdown-link-check](https://github.com/tcort/markdown-link-check)         |
+| `exclude`       | (not defined)                                       | Exclude files or directories - see the [--exclude parameter](https://github.com/sharkdp/fd#excluding-specific-files-or-directories) of [fd](https://github.com/sharkdp/fd) |
+| `fd_cmd_params` | `. -0 --extension md --type f --hidden --no-ignore` | Set your own parameters for [fd](https://github.com/sharkdp/fd) command. `exclude` and `search_paths` parameters are ignored if this is set.                               |
+| `quiet`         | (not defined)                                       | Display errors only                                                                                                                                                        |
 | `search_paths`  | (not defined)                                       | By default, all `*.md` files in the entire repository are checked. This parameter allows you to specify particular directories to search.                                  |
-| `verbose`       | (not defined)                                       | Displays detailed error information                                                                                                                                         |
+| `verbose`       | (not defined)                                       | Displays detailed error information                                                                                                                                        |
 
 None of the parameters listed above are mandatory.
 
 If you need to exclude/ignore domains, add custom headers, or prevent specific
-URLs from being checked, use the `config_file` option for
-[markdown-link-check](https://github.com/tcort/markdown-link-check). See the
-[config file format documentation](https://github.com/tcort/markdown-link-check#config-file-format)
+URLs from being checked, use the `config_file` option for [markdown-link-check](https://github.com/tcort/markdown-link-check).
+See the [config file format documentation](https://github.com/tcort/markdown-link-check#config-file-format)
 for details.
 
 If a `.mlc_config.json` file is present in the root of your repository, it will
