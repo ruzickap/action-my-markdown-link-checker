@@ -38,7 +38,7 @@ export DEMO_PROMPT="${GREEN}➜ ${CYAN}$ "
 # hide the evidence
 clear
 
-p '* This is example of my-markdown-link-checker usage...'
+p '* This is an example of my-markdown-link-checker usage...'
 
 p ''
 p '* Run the container image "peru/my-markdown-link-checker" to start checking "md" files in the "tests" directory:'
@@ -48,10 +48,10 @@ pe 'docker run --rm -t -e INPUT_SEARCH_PATHS -v "${PWD}:/mnt" peru/my-markdown-l
 sleep 3
 
 p ''
-p '* As you can see there is dead link (https://non-existing-domain.com) in the file tests/test-bad-mdfile/bad.md'
+p '* As you can see, there is a dead link (https://non-existing-domain.com) in the file tests/test-bad-mdfile/bad.md'
 
 p ''
-p "* You can create config file for markdown-link-check and ignore this domain form checks:"
+p "* You can create a config file for markdown-link-check and ignore this domain from checks:"
 pe 'cat > .mlc_config.json << EOF
 {
   "ignorePatterns": [
@@ -68,7 +68,7 @@ pe 'rm .mlc_config.json'
 sleep 3
 
 p ''
-p "* Or you can exclude this file form being checked:"
+p "* Or you can exclude this file from being checked:"
 pe 'export INPUT_EXCLUDE="test-bad-mdfile/bad.md test1/CHANGELOG.md"'
 pe 'docker run --rm -t -e INPUT_EXCLUDE -e INPUT_SEARCH_PATHS -v "${PWD}:/mnt" peru/my-markdown-link-checker'
 
@@ -82,7 +82,7 @@ pe 'docker run --rm -t -e INPUT_EXCLUDE -e INPUT_VERBOSE -e INPUT_SEARCH_PATHS -
 sleep 3
 
 p ''
-p '* You can also specify the command line parameters for fd command if you need advanced search:'
+p '* You can also specify the command-line parameters for the fd command if you need advanced search:'
 pe 'export INPUT_FD_CMD_PARAMS=". -0 --extension md --type f --hidden --no-ignore --exclude test1/excluded_file.md --exclude bad.md --exclude CHANGELOG.md tests/"'
 pe 'docker run --rm -t -e INPUT_FD_CMD_PARAMS -v "${PWD}:/mnt" peru/my-markdown-link-checker'
 

@@ -8,16 +8,16 @@ export CONFIG_FILE=${INPUT_CONFIG_FILE:-}
 # Debug variable - enable by setting non-empty value
 export DEBUG=${INPUT_DEBUG:-}
 
-# Exclude files or directories which should not be checked
+# Exclude files or directories that should not be checked
 export EXCLUDE=${INPUT_EXCLUDE:-}
 
-# Command line parameters for fd ("exclude" and "search_paths" parameters are ignored if this is set)
+# Command-line parameters for fd (the "exclude" and "search_paths" parameters are ignored if this is set)
 export FD_CMD_PARAMS="${INPUT_FD_CMD_PARAMS:- . -0 --extension md --type f --hidden --no-ignore}"
 
 # Debug variable - enable by setting non-empty value
 export QUIET=${INPUT_QUIET:-}
 
-# Files or paths which will be checked
+# Files or paths that will be checked
 export SEARCH_PATHS=${INPUT_SEARCH_PATHS:-}
 
 # Debug variable - enable by setting non-empty value
@@ -63,7 +63,7 @@ fi
 print_info "Start checking..."
 
 if [ -n "${EXCLUDE}" ]; then
-  print_info "Files/dirs which will be excluded:\n${EXCLUDE}"
+  print_info "Files/dirs that will be excluded:\n${EXCLUDE}"
 fi
 
 echo "${EXCLUDE}" > /tmp/fd_exclude_file
