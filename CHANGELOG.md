@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.5.0](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.4.0...v1.5.0) (2025-09-18)
+
+
+### Features
+
+* add/update default repository files ([#102](https://github.com/ruzickap/action-my-markdown-link-checker/issues/102)) ([1e2c3c7](https://github.com/ruzickap/action-my-markdown-link-checker/commit/1e2c3c72fca0eb4ac93e9c27d814b798484e4202))
+* add/update default repository files ([#104](https://github.com/ruzickap/action-my-markdown-link-checker/issues/104)) ([b460f1a](https://github.com/ruzickap/action-my-markdown-link-checker/commit/b460f1a438c98b199ee5bea0d80f79433e78b524))
+* add/update default repository files ([#108](https://github.com/ruzickap/action-my-markdown-link-checker/issues/108)) ([839787f](https://github.com/ruzickap/action-my-markdown-link-checker/commit/839787ff0855f94848a446982913d4ad9d9ce3cc))
+* add/update default repository files ([#98](https://github.com/ruzickap/action-my-markdown-link-checker/issues/98)) ([839a314](https://github.com/ruzickap/action-my-markdown-link-checker/commit/839a3149a6b79cbbe5a51951bcb86fc4c5016e9b))
+* add/update default repository files ([#99](https://github.com/ruzickap/action-my-markdown-link-checker/issues/99)) ([dd9ebbb](https://github.com/ruzickap/action-my-markdown-link-checker/commit/dd9ebbb86be51ff0cf2ce616c11c5acfbe721ff9))
+
+
+### Bug Fixes
+
+* add 'packages' permission to release-please workflow ([#106](https://github.com/ruzickap/action-my-markdown-link-checker/issues/106)) ([181e5df](https://github.com/ruzickap/action-my-markdown-link-checker/commit/181e5df5400c7762a305004f783e21225c940665))
+* update GitHub Actions permissions in release-please workflow ([#105](https://github.com/ruzickap/action-my-markdown-link-checker/issues/105)) ([62997e5](https://github.com/ruzickap/action-my-markdown-link-checker/commit/62997e593713c5c5f75804fd31001e0b3326a5aa))
+
 ## [1.4.0](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.3.0...v1.4.0) (2025-06-03)
 
 
