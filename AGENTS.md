@@ -1,109 +1,169 @@
 # AI Agent Guidelines
 
-## Overview
+## Project Overview
 
-This document provides guidelines and best practices for AI agents working
-on this repository. Follow these standards to ensure consistency, quality,
-and maintainability across all contributions.
+Docker-based GitHub Action (`action-my-markdown-link-checker`) that checks
+Markdown files for broken links. It wraps the
+[markdown-link-check](https://github.com/tcort/markdown-link-check) npm
+package and uses [fd](https://github.com/sharkdp/fd) for file discovery.
 
-## Table of Contents
+Key files: `entrypoint.sh` (main logic), `Dockerfile` (image build),
+`action.yml` (GitHub Action definition).
 
-- [AI Agent Guidelines](#ai-agent-guidelines)
-  - [Overview](#overview)
-  - [Table of Contents](#table-of-contents)
-  - [Markdown Files](#markdown-files)
-    - [Linting and Formatting](#linting-and-formatting)
-    - [Markdown Best Practices](#markdown-best-practices)
-  - [Version Control](#version-control)
-    - [Commit Messages](#commit-messages)
-      - [Format Rules](#format-rules)
-      - [Commit Message Structure](#commit-message-structure)
-        - [Example](#example)
-    - [Branching](#branching)
-    - [Pull Requests](#pull-requests)
-  - [Quality \& Best Practices](#quality--best-practices)
+## Build and Test Commands
 
-## Markdown Files
+```bash
+# Build the Docker image locally
+docker build . --file Dockerfile
 
-### Linting and Formatting
+# Run the action locally against a directory
+export INPUT_SEARCH_PATHS="tests/"
+docker run --rm -t -e INPUT_SEARCH_PATHS \
+  -v "${PWD}:/mnt" peru/my-markdown-link-checker
 
-- **Markdown compliance**: Ensure all Markdown files pass `rumdl` checks
-- **Code blocks**: For `bash`/`shell` code blocks:
-  - Verify they pass `shellcheck` validation
-  - Format with `shfmt` for consistency
+# Run with exclusions
+export INPUT_EXCLUDE="test-bad-mdfile/bad.md CHANGELOG.md"
+docker run --rm -t -e INPUT_EXCLUDE -e INPUT_SEARCH_PATHS \
+  -v "${PWD}:/mnt" peru/my-markdown-link-checker
 
-### Markdown Best Practices
+# Run with debug mode
+export INPUT_DEBUG="true"
+docker run --rm -t -e INPUT_DEBUG -e INPUT_SEARCH_PATHS \
+  -v "${PWD}:/mnt" peru/my-markdown-link-checker
+```
 
-- Use proper heading hierarchy (don't skip levels)
-- Wrap lines at 80 characters for readability
-- Use semantic HTML only when necessary
-- Prefer code fences over inline code for multi-line examples
-- Include language identifiers in code fences
+### Linting (via MegaLinter)
+
+There is no single `lint` command. CI uses MegaLinter (`.mega-linter.yml`).
+Run individual linters locally:
+
+```bash
+# Markdown linting
+rumdl .
+
+# Shell script linting and formatting
+shellcheck --exclude=SC2317 entrypoint.sh
+shfmt --case-indent --indent 2 --space-redirects -d entrypoint.sh
+
+# Link checking
+lychee --config lychee.toml .
+
+# GitHub Actions validation
+actionlint
+
+# JSON validation (supports comments)
+jsonlint --comments .github/renovate.json5
+
+# Security scanning
+checkov --quiet --skip-check CKV_GHA_7 -d .
+trivy fs --severity HIGH,CRITICAL --ignore-unfixed .
+```
+
+### Tests
+
+Tests run in CI via `.github/workflows/tests.yml`. There are four test
+scenarios that exercise the action with different input combinations
+(`search_paths`, `exclude`, `quiet`, `verbose`, `debug`, `.mlc_config.json`).
+Test fixtures live in `tests/` subdirectories. There is no unit test
+framework; testing is integration-based using the action itself.
+
+## Shell Script Style (`entrypoint.sh`)
+
+- **Shebang**: `#!/usr/bin/env bash`
+- **Strict mode**: `set -Eeuo pipefail`
+- **Formatter**: `shfmt --case-indent --indent 2 --space-redirects`
+- **Linter**: `shellcheck` (exclude SC2317)
+- **Indentation**: 2 spaces, no tabs
+- **Variables**: UPPERCASE with braces: `${MY_VARIABLE}`
+- **Defaults**: Use `${VAR:-}` for optional env vars
+- **Arrays**: Use `declare -a` for arrays, `mapfile` for population
+- **Functions**: Use `snake_case` (e.g., `print_error`, `error_trap`)
+- **Output**: Use helper functions (`print_error`, `print_info`) with
+  ANSI color codes for user-facing messages
+- **Error handling**: Set `trap error_trap ERR` for error reporting
+- **Comments**: Use `#` with a space; section headers use `####` blocks
+- **Quoting**: Always quote variable expansions in arguments;
+  use `# shellcheck disable=SCXXXX` when word splitting is intentional
+
+## Markdown Style
+
+- **Linter**: `rumdl` (Rust-based, configured in `.rumdl.toml`)
+- **Line length**: Wrap at 72 characters (code blocks excluded)
+- **Headings**: Proper hierarchy, no skipped levels
+- **Code fences**: Always include language identifiers (`bash`, `json`)
+- **Excluded from linting**: `CHANGELOG.md` (auto-generated)
+
+## Dockerfile Style
+
+- **Base image**: Pin with SHA digest (`@sha256:...`)
+- **Shell**: `SHELL ["/bin/ash", "-eo", "pipefail", "-c"]`
+- **Security**: Run as `USER nobody`, set `HEALTHCHECK NONE`
+- **Dependencies**: Version-pin with Renovate comments
+  (`# renovate: datasource=npm depName=...`)
+- **kics exceptions**: Use `# kics-scan ignore-block` when needed
+
+## GitHub Actions Workflow Style
+
+- **Permissions**: Always set `permissions: read-all` at workflow level
+- **Action pinning**: Pin to full SHA, add version comment
+  (e.g., `@sha256abc # v6.0.2`)
+- **Triggers**: Use path filters to limit unnecessary runs
+- **Security exceptions**: Use `# kics-scan ignore-line` for self-refs
+- **Timeout**: Set `timeout-minutes` on long-running jobs
+- **Validate**: Run `actionlint` after any workflow/action change
+
+## Link Checking (`lychee.toml`)
+
+- Accepts HTTP 200 and 429 (rate limited)
+- Caches results; re-checks 403/429 responses
+- Excludes template variables (`%7B.*%7D`), shell variables (`\$`)
+- Excludes `CHANGELOG.md` and `package-lock.json`
+- Excludes all private IP addresses
+
+## Security Scanning
+
+- **Checkov**: Skips `CKV_GHA_7` (workflow_dispatch inputs)
+- **DevSkim**: Ignores DS162092 (debug code), DS137138 (insecure URL);
+  excludes `CHANGELOG.md`
+- **KICS**: Fails only on HIGH severity
+- **Trivy**: HIGH/CRITICAL only, ignores unfixed vulnerabilities
 
 ## Version Control
 
 ### Commit Messages
 
-#### Format Rules
-
-- **Conventional commit format**: Use standard types (`feat`, `fix`, `docs`,
-  `chore`, `refactor`, `test`, `style`, `perf`, `ci`, `build`, `revert`)
-- **Line limits**: Subject ≤ 80 characters, body lines ≤ 80 characters
-- **Single blank line**: Between subject and body, between body paragraphs
-
-#### Commit Message Structure
-
-- **Subject line**:
-  - Imperative mood (e.g., "add" not "added" or "adds")
-  - Use lower case (except for proper nouns and abbreviations)
-  - No period at the end
-  - Maximum 80 characters
-  - Format: `<type>: <description>`
-
-- **Body** (optional but recommended for non-trivial changes):
-  - Explain **what** changed and **why**
-  - Wrap lines at 80 characters
-  - Use Markdown formatting
-  - Separate paragraphs with blank lines
-  - Reference issues using keywords: `Fixes`, `Closes`, `Resolves`
-
-##### Example
-
-```markdown
-feat: add automated dependency updates
-
-- Implement Dependabot configuration
-- Configure weekly security updates
-- Add auto-merge for patch/minor updates
-
-Resolves: #123
-```
+- **Format**: `<type>: <description>` (conventional commits)
+- **Types**: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`,
+  `style`, `perf`, `ci`, `build`, `revert`
+- **Subject**: Imperative mood, lowercase, no period, max 72 chars
+- **Body**: Wrap at 72 chars, explain what and why, reference issues
+  with `Fixes`, `Closes`, `Resolves`
 
 ### Branching
 
-- **Naming convention**: Follow the
-  [Conventional Branch](https://conventional-branch.github.io/)
-  specification
-
-- **Naming guidelines**:
-  - Keep branch names concise and descriptive
-  - Use kebab-case (lower case with hyphens)
-  - Include issue number when applicable: `feat/123-add-feature-name`
+- Follow Conventional Branch format: `<type>/<description>`
+- Types: `feature/`, `feat/`, `bugfix/`, `fix/`, `hotfix/`,
+  `release/`, `chore/`
+- Use lowercase, hyphens, no trailing/leading/consecutive hyphens
 
 ### Pull Requests
 
-- **Always create draft PR** - Create pull requests as drafts initially
-- **Title format** - Use conventional commit format (`feat: add new feature`)
-- **Description** - Include clear explanation of changes and motivation
-- **Link issues** - Reference related issues using keywords (Fixes, Closes,
-  Resolves)
+- Create as **draft** initially
+- Title must follow conventional commit format
+- Include clear description and link related issues
 
-## Quality & Best Practices
+## JSON Files
 
-- Pass pre-commit hooks
-- Follow project coding standards
-- Include tests for new functionality
-- Update documentation for user-facing changes
-- Make atomic, focused commits
-- Explain reasoning behind changes
-- Maintain consistent formatting
+- Must pass `jsonlint --comments` validation
+- Comments are allowed (e.g., in `renovate.json5`)
+
+## Quality Checklist
+
+- [ ] Shell scripts pass `shellcheck` and `shfmt` checks
+- [ ] Markdown passes `rumdl` and `lychee` checks
+- [ ] Docker image builds successfully
+- [ ] GitHub Actions workflows pass `actionlint`
+- [ ] Security scans pass (checkov, trivy, kics, devskim)
+- [ ] Commits follow conventional commit format
+- [ ] Actions pinned to full SHA with version comments
+- [ ] Two-space indentation, no tabs
