@@ -88,7 +88,7 @@ framework; testing is integration-based using the action itself.
 ## Markdown Style
 
 - **Linter**: `rumdl` (Rust-based, configured in `.rumdl.toml`)
-- **Line length**: Wrap at 72 characters (code blocks excluded)
+- **Line length**: Wrap lines at 80 characters (code blocks excluded)
 - **Headings**: Proper hierarchy, no skipped levels
 - **Code fences**: Always include language identifiers (`bash`, `json`)
 - **Excluded from linting**: `CHANGELOG.md` (auto-generated)
