@@ -100,7 +100,6 @@ framework; testing is integration-based using the action itself.
 - **Security**: Run as `USER nobody`, set `HEALTHCHECK NONE`
 - **Dependencies**: Version-pin with Renovate comments
   (`# renovate: datasource=npm depName=...`)
-- **kics exceptions**: Use `# kics-scan ignore-block` when needed
 
 ## GitHub Actions Workflow Style
 
@@ -108,7 +107,6 @@ framework; testing is integration-based using the action itself.
 - **Action pinning**: Pin to full SHA, add version comment
   (e.g., `@sha256abc # v6.0.2`)
 - **Triggers**: Use path filters to limit unnecessary runs
-- **Security exceptions**: Use `# kics-scan ignore-line` for self-refs
 - **Timeout**: Set `timeout-minutes` on long-running jobs
 - **Validate**: Run `actionlint` after any workflow/action change
 
@@ -125,7 +123,6 @@ framework; testing is integration-based using the action itself.
 - **Checkov**: Skips `CKV_GHA_7` (workflow_dispatch inputs)
 - **DevSkim**: Ignores DS162092 (debug code), DS137138 (insecure URL);
   excludes `CHANGELOG.md`
-- **KICS**: Fails only on HIGH severity
 - **Trivy**: HIGH/CRITICAL only, ignores unfixed vulnerabilities
 
 ## Version Control
@@ -163,7 +160,7 @@ framework; testing is integration-based using the action itself.
 - [ ] Markdown passes `rumdl` and `lychee` checks
 - [ ] Docker image builds successfully
 - [ ] GitHub Actions workflows pass `actionlint`
-- [ ] Security scans pass (checkov, trivy, kics, devskim)
+- [ ] Security scans pass (checkov, trivy, devskim)
 - [ ] Commits follow conventional commit format
 - [ ] Actions pinned to full SHA with version comments
 - [ ] Two-space indentation, no tabs
