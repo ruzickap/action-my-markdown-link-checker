@@ -14,7 +14,6 @@ ENV MARKDOWNLINT_LINK_CHECK_VERSION="3.14.2"
 
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
-# kics-scan ignore-block
 RUN set -eux && \
     apk --update --no-cache add bash fd && \
     npm install --global --production "markdown-link-check@v${MARKDOWNLINT_LINK_CHECK_VERSION}"
