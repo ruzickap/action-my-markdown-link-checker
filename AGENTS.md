@@ -1,166 +1,71 @@
-# AI Agent Guidelines
+# AGENTS.md
 
-## Project Overview
+Repo-specific notes for agents. General contribution standards (commit format,
+branching, linting tools) live in `~/.config/opencode/AGENTS.md`; only the
+non-obvious, this-repo facts are below.
 
-Docker-based GitHub Action (`action-my-markdown-link-checker`) that checks
-Markdown files for broken links. It wraps the
-[markdown-link-check](https://github.com/tcort/markdown-link-check) npm
-package and uses [fd](https://github.com/sharkdp/fd) for file discovery.
+## What this repo is
 
-Key files: `entrypoint.sh` (main logic), `Dockerfile` (image build),
-`action.yml` (GitHub Action definition).
+A **Docker-based GitHub Action** that checks Markdown files for broken links.
+It is not a Node/Terraform project despite linter mentions — the only source
+code is shell + Docker + YAML.
 
-## Build and Test Commands
+Core wiring:
 
-```bash
-# Build the Docker image locally
-docker build . --file Dockerfile
+- `action.yml` — Action definition (`using: docker`, `image: Dockerfile`).
+  Declares all 7 `inputs` (`config_file`, `debug`, `exclude`, `fd_cmd_params`,
+  `quiet`, `search_paths`, `verbose`).
+- `Dockerfile` — builds `node:current-alpine`, installs `bash`, `fd`, and
+  npm `markdown-link-check`. Runs as `USER nobody`, `WORKDIR /mnt`.
+- `entrypoint.sh` — the real logic. Reads `INPUT_*` env vars, uses `fd` to find
+  `*.md` files, then runs `markdown-link-check`. `EXCLUDE` is written to a temp
+  file and passed via `fd --ignore-file`.
 
-# Run the action locally against a directory
-export INPUT_SEARCH_PATHS="tests/"
-docker run --rm -t -e INPUT_SEARCH_PATHS \
-  -v "${PWD}:/mnt" peru/my-markdown-link-checker
+When changing inputs, keep **four places in sync**: `action.yml` inputs,
+`entrypoint.sh` `INPUT_*` mapping, `README.md` parameter table, and `tests.yml`.
 
-# Run with exclusions
-export INPUT_EXCLUDE="test-bad-mdfile/bad.md CHANGELOG.md"
-docker run --rm -t -e INPUT_EXCLUDE -e INPUT_SEARCH_PATHS \
-  -v "${PWD}:/mnt" peru/my-markdown-link-checker
+## Editing gotchas
 
-# Run with debug mode
-export INPUT_DEBUG="true"
-docker run --rm -t -e INPUT_DEBUG -e INPUT_SEARCH_PATHS \
-  -v "${PWD}:/mnt" peru/my-markdown-link-checker
-```
+- **`markdown-link-check` version is pinned** in `Dockerfile`
+  (`MARKDOWNLINT_LINK_CHECK_VERSION`) with a `# renovate:` comment. Update the
+  ENV value, not an unpinned tag; Renovate manages bumps.
+- **`fd` defaults**: `FD_CMD_PARAMS` defaults to
+  `. -0 --extension md --type f --hidden --no-ignore`. Setting `fd_cmd_params`
+  makes the Action ignore `exclude` and `search_paths` entirely.
+- **`keep-sorted` blocks**: several files (`.dockerignore`, `.gitignore`,
+  `.mega-linter.yml`, `.github/workflows/stale.yml`) wrap lists in
+  `# keep-sorted start` / `# keep-sorted end`. Entries inside MUST stay
+  alphabetically sorted or MegaLinter fails.
+- Shell scripts use `set -Eeuo pipefail` and an `ERR` trap; preserve that.
 
-### Linting (via MegaLinter)
+## CI quirks (easy to trip over)
 
-There is no single `lint` command. CI uses MegaLinter (`.mega-linter.yml`).
-Run individual linters locally:
+- **MegaLinter only runs on non-`main` branches** (`mega-linter.yml`,
+  `branches-ignore: main`) and is **skipped** on `chore/renovate/*` and
+  `release-please--*` branches. Push to a feature branch to get lint feedback.
+- **README bash blocks are executed in CI.** `readme-commands-check.yml` greps
+  every ` ```bash ` block in `README.md` and runs it with `bash -euxo pipefail`.
+  Do not add illustrative-but-unrunnable bash fences to README; use `yaml` for
+  workflow examples (the existing examples are `yaml`, so they are safe).
+- **`tests.yml`** builds the Action locally (`uses: ./`) against fixtures in
+  `tests/`. Note: the workflow references `tests/test2/normal.md`,
+  `tests/test1/`, and `tests/test3-multiple-files/`, but only
+  `tests/test-bad-mdfile/`, `tests/test1/`, `tests/test2/` exist on disk
+  (`test3-multiple-files` is missing) — keep fixtures and workflow paths
+  aligned when editing.
+- `CHANGELOG.md` is excluded from nearly every linter (rumdl, lychee, devskim,
+  global filter) and is auto-generated — do not hand-edit it.
 
-```bash
-# Markdown linting
-rumdl .
+## Linting locally (matches CI / MegaLinter `documentation` flavor)
 
-# Shell script linting and formatting
-shellcheck --exclude=SC2317 entrypoint.sh
-shfmt --case-indent --indent 2 --space-redirects -d entrypoint.sh
+- Markdown: `rumdl` (config `.rumdl.toml`; code blocks exempt from line length).
+- Links: `lychee` (config `lychee.toml`; accepts 200/429, excludes private IPs).
+- Shell: `shellcheck --exclude=SC2317` and
+  `shfmt --case-indent --indent 2 --space-redirects`.
+- Workflows: validate with `actionlint`; actions are pinned to full SHAs.
 
-# Link checking
-lychee --config lychee.toml .
+## Releases
 
-# GitHub Actions validation
-actionlint
-
-# JSON validation (supports comments)
-jsonlint --comments .github/renovate.json5
-
-# Security scanning
-checkov --quiet --skip-check CKV_GHA_7 -d .
-trivy fs --severity HIGH,CRITICAL --ignore-unfixed .
-```
-
-### Tests
-
-Tests run in CI via `.github/workflows/tests.yml`. There are four test
-scenarios that exercise the action with different input combinations
-(`search_paths`, `exclude`, `quiet`, `verbose`, `debug`, `.mlc_config.json`).
-Test fixtures live in `tests/` subdirectories. There is no unit test
-framework; testing is integration-based using the action itself.
-
-## Shell Script Style (`entrypoint.sh`)
-
-- **Shebang**: `#!/usr/bin/env bash`
-- **Strict mode**: `set -Eeuo pipefail`
-- **Formatter**: `shfmt --case-indent --indent 2 --space-redirects`
-- **Linter**: `shellcheck` (exclude SC2317)
-- **Indentation**: 2 spaces, no tabs
-- **Variables**: UPPERCASE with braces: `${MY_VARIABLE}`
-- **Defaults**: Use `${VAR:-}` for optional env vars
-- **Arrays**: Use `declare -a` for arrays, `mapfile` for population
-- **Functions**: Use `snake_case` (e.g., `print_error`, `error_trap`)
-- **Output**: Use helper functions (`print_error`, `print_info`) with
-  ANSI color codes for user-facing messages
-- **Error handling**: Set `trap error_trap ERR` for error reporting
-- **Comments**: Use `#` with a space; section headers use `####` blocks
-- **Quoting**: Always quote variable expansions in arguments;
-  use `# shellcheck disable=SCXXXX` when word splitting is intentional
-
-## Markdown Style
-
-- **Linter**: `rumdl` (Rust-based, configured in `.rumdl.toml`)
-- **Line length**: Wrap lines at 80 characters (code blocks excluded)
-- **Headings**: Proper hierarchy, no skipped levels
-- **Code fences**: Always include language identifiers (`bash`, `json`)
-- **Excluded from linting**: `CHANGELOG.md` (auto-generated)
-
-## Dockerfile Style
-
-- **Base image**: Pin with SHA digest (`@sha256:...`)
-- **Shell**: `SHELL ["/bin/ash", "-eo", "pipefail", "-c"]`
-- **Security**: Run as `USER nobody`, set `HEALTHCHECK NONE`
-- **Dependencies**: Version-pin with Renovate comments
-  (`# renovate: datasource=npm depName=...`)
-
-## GitHub Actions Workflow Style
-
-- **Permissions**: Always set `permissions: read-all` at workflow level
-- **Action pinning**: Pin to full SHA, add version comment
-  (e.g., `@sha256abc # v6.0.2`)
-- **Triggers**: Use path filters to limit unnecessary runs
-- **Timeout**: Set `timeout-minutes` on long-running jobs
-- **Validate**: Run `actionlint` after any workflow/action change
-
-## Link Checking (`lychee.toml`)
-
-- Accepts HTTP 200 and 429 (rate limited)
-- Caches results; re-checks 403/429 responses
-- Excludes template variables (`%7B.*%7D`), shell variables (`\$`)
-- Excludes `CHANGELOG.md` and `package-lock.json`
-- Excludes all private IP addresses
-
-## Security Scanning
-
-- **Checkov**: Skips `CKV_GHA_7` (workflow_dispatch inputs)
-- **DevSkim**: Ignores DS162092 (debug code), DS137138 (insecure URL);
-  excludes `CHANGELOG.md`
-- **Trivy**: HIGH/CRITICAL only, ignores unfixed vulnerabilities
-
-## Version Control
-
-### Commit Messages
-
-- **Format**: `<type>: <description>` (conventional commits)
-- **Types**: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`,
-  `style`, `perf`, `ci`, `build`, `revert`
-- **Subject**: Imperative mood, lowercase, no period, max 72 chars
-- **Body**: Wrap at 72 chars, explain what and why, reference issues
-  with `Fixes`, `Closes`, `Resolves`
-
-### Branching
-
-- Follow Conventional Branch format: `<type>/<description>`
-- Types: `feature/`, `feat/`, `bugfix/`, `fix/`, `hotfix/`,
-  `release/`, `chore/`
-- Use lowercase, hyphens, no trailing/leading/consecutive hyphens
-
-### Pull Requests
-
-- Create as **draft** initially
-- Title must follow conventional commit format
-- Include clear description and link related issues
-
-## JSON Files
-
-- Must pass `jsonlint --comments` validation
-- Comments are allowed (e.g., in `renovate.json5`)
-
-## Quality Checklist
-
-- [ ] Shell scripts pass `shellcheck` and `shfmt` checks
-- [ ] Markdown passes `rumdl` and `lychee` checks
-- [ ] Docker image builds successfully
-- [ ] GitHub Actions workflows pass `actionlint`
-- [ ] Security scans pass (checkov, trivy, devskim)
-- [ ] Commits follow conventional commit format
-- [ ] Actions pinned to full SHA with version comments
-- [ ] Two-space indentation, no tabs
+`release-please` (`release-type: simple`, runs on `main`) opens the release PR
+and, on merge, force-pushes moving `vMAJOR` / `vMAJOR.MINOR` tags. Version lives
+in git tags + `CHANGELOG.md`, not a source file. Users pin via `@v1`.
