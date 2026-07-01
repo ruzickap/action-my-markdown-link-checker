@@ -1,2 +1,4 @@
 asciinema\.org
 non-existing-domain\.com
+# Tokenized git remote used to push tags in release-please.yml
+x-access-token
