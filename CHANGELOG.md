@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.2](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.5.1...v1.5.2) (2026-07-01)
+
+
+### Bug Fixes
+
+* authenticate rolling version tag push in release-please ([#138](https://github.com/ruzickap/action-my-markdown-link-checker/issues/138)) ([52a15e1](https://github.com/ruzickap/action-my-markdown-link-checker/commit/52a15e17b7b635e5edcf76d0faa99a03649b9949))
+* use auth header instead of token in URL for tag push ([#140](https://github.com/ruzickap/action-my-markdown-link-checker/issues/140)) ([33c2561](https://github.com/ruzickap/action-my-markdown-link-checker/commit/33c256176c50a1d850a9472aa28c9ae211afc284))
+
 ## [1.5.1](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.5.0...v1.5.1) (2026-07-01)
 
 
