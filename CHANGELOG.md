@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.5.0...v1.5.1) (2026-07-01)
+
+
+### Miscellaneous Chores
+
+* release 1.5.1 ([#136](https://github.com/ruzickap/action-my-markdown-link-checker/issues/136)) ([21af742](https://github.com/ruzickap/action-my-markdown-link-checker/commit/21af7425ff641a9031833a27688193f214aa4bc1))
+
 ## [1.5.0](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.4.0...v1.5.0) (2025-09-18)
 
 
