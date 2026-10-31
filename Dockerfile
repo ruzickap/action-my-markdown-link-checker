@@ -9,14 +9,15 @@ LABEL "com.github.actions.description"="Check markdown files for broken links"
 LABEL "com.github.actions.icon"="list"
 LABEL "com.github.actions.color"="blue"
 
-# renovate: datasource=npm depName=markdown-link-check versioning=npm
-ENV MARKDOWNLINT_LINK_CHECK_VERSION="3.15.0"
-
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
+
+COPY package.json package-lock.json /opt/app/
+
+ENV PATH="/opt/app/node_modules/.bin:${PATH}"
 
 RUN set -eux && \
     apk --update --no-cache add bash fd && \
-    npm install --global --production "markdown-link-check@v${MARKDOWNLINT_LINK_CHECK_VERSION}"
+    npm ci --omit=dev --prefix /opt/app
 
 COPY entrypoint.sh /entrypoint.sh
 
