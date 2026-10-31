@@ -26,9 +26,9 @@ When changing inputs, keep **four places in sync**: `action.yml` inputs,
 
 ## Editing gotchas
 
-- **`markdown-link-check` version is pinned** in `Dockerfile`
-  (`MARKDOWNLINT_LINK_CHECK_VERSION`) with a `# renovate:` comment. Update the
-  ENV value, not an unpinned tag; Renovate manages bumps.
+- **`markdown-link-check` version is pinned** in `package.json` and
+  `package-lock.json` (installed via `npm ci` in `Dockerfile`). Renovate
+  manages bumps; keep both files in sync.
 - **`fd` defaults**: `FD_CMD_PARAMS` defaults to
   `. -0 --extension md --type f --hidden --no-ignore`. Setting `fd_cmd_params`
   makes the Action ignore `exclude` and `search_paths` entirely.
