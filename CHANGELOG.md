@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.3](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.5.2...v1.5.3) (2026-10-31)
+
+
+### Bug Fixes
+
+* pin npm dependencies by hash in Dockerfile ([#144](https://github.com/ruzickap/action-my-markdown-link-checker/issues/144)) ([b4ca6db](https://github.com/ruzickap/action-my-markdown-link-checker/commit/b4ca6db0283326604d2a8cee87af68f985db735c))
+
 ## [1.5.2](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.5.1...v1.5.2) (2026-10-13)
 
 
