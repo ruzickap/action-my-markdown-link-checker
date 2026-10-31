@@ -1,7 +1,11 @@
 {
   "name": "action-my-markdown-link-checker",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "markdown-link-check": "3.15.0"
+  },
+  "overrides": {
+    "basic-ftp": "6.2.1"
   }
 }
