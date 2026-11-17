@@ -4,11 +4,6 @@ LABEL maintainer="Petr Ruzicka <petr.ruzicka@gmail.com>"
 LABEL repository="https://github.com/ruzickap/action-my-markdown-link-checker"
 LABEL homepage="https://github.com/ruzickap/action-my-markdown-link-checker"
 
-LABEL "com.github.actions.name"="My Markdown Link Checker"
-LABEL "com.github.actions.description"="Check markdown files for broken links"
-LABEL "com.github.actions.icon"="list"
-LABEL "com.github.actions.color"="blue"
-
 SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
 COPY package.json package-lock.json /opt/app/
