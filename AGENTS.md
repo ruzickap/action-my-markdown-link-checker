@@ -30,8 +30,10 @@ When changing inputs, keep **four places in sync**: `action.yml` inputs,
   `package-lock.json` (installed via `npm ci` in `Dockerfile`). Renovate
   manages bumps; keep both files in sync.
 - **`fd` defaults**: `FD_CMD_PARAMS` defaults to
-  `. -0 --extension md --type f --hidden --no-ignore`. Setting `fd_cmd_params`
-  makes the Action ignore `exclude` and `search_paths` entirely.
+  `. -0 --extension md --type f --hidden` (fd honors `.gitignore`). Setting
+  `fd_cmd_params` replaces only these options: `exclude` and `search_paths`
+  are still appended, and `-0` must stay. `exclude` patterns are matched from
+  the repo root (not from `search_paths`), because they go to `--ignore-file`.
 - **`keep-sorted` blocks**: several files (`.dockerignore`, `.gitignore`,
   `.mega-linter.yml`, `.github/workflows/stale.yml`) wrap lists in
   `keep-sorted` start/end comments. Entries inside MUST stay alphabetically
