@@ -33,15 +33,17 @@ jobs:
         with:
           persist-credentials: false
 
+      # shortcut: zizmor wants "uses: $/" in these steps, but actionlint 1.7.12
+      # rejects it. Drop the zizmor ignores once actionlint supports "$/".
       - name: Test 1 - Check done in tests/test2 - tests/test2/normal.md
         # Unpinned Actions Full Length Commit SHA
-        uses: ./
+        uses: ./ # zizmor: ignore[self-repository]
         with:
           debug: true
           search_paths: tests/test2
 
       - name: Test 2 - Check with "exclude", "search_paths" and "quiet" - tests/test2/normal.md
-        uses: ./
+        uses: ./ # zizmor: ignore[self-repository]
         with:
           exclude: |
             CHANGELOG.md
@@ -53,7 +55,7 @@ jobs:
 
       - name: Test 3 - Check "all" files
         continue-on-error: true
-        uses: ./
+        uses: ./ # zizmor: ignore[self-repository]
         with:
           debug: true
           search_paths: tests
@@ -71,7 +73,7 @@ jobs:
           EOF
 
       - name: Test 4 - Check with "search_paths", "verbose" and ".mlc_config.json" - "https://non-existing-domain.com" is ignored
-        uses: ./
+        uses: ./ # zizmor: ignore[self-repository]
         with:
           search_paths: |
             tests/test1
