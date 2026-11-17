@@ -50,11 +50,11 @@ When changing inputs, keep **four places in sync**: `action.yml` inputs,
   Do not add illustrative-but-unrunnable bash fences to README; use `yaml` for
   workflow examples (the existing examples are `yaml`, so they are safe).
 - **`tests.yml`** builds the Action locally (`uses: ./`) against fixtures in
-  `tests/`. Note: the workflow references `tests/test2/normal.md`,
-  `tests/test1/`, and `tests/test3-multiple-files/`, but only
-  `tests/test-bad-mdfile/`, `tests/test1/`, `tests/test2/` exist on disk
-  (`test3-multiple-files` is missing) — keep fixtures and workflow paths
-  aligned when editing.
+  `tests/`. Dead-link fixtures use `https://non-existing-domain.invalid`: the
+  `.invalid` TLD can never resolve (the old `.com` domain got registered and
+  silently made every test pass). Tests 3 and 5 must fail; the last step
+  asserts it. It also runs on `chore/renovate/**` pushes, so Renovate's branch
+  automerge waits for it.
 - `CHANGELOG.md` is excluded from nearly every linter (rumdl, lychee, devskim,
   global filter) and is auto-generated — do not hand-edit it.
 
