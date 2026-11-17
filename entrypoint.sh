@@ -17,7 +17,7 @@ export FD_CMD_PARAMS="${INPUT_FD_CMD_PARAMS:- . -0 --extension md --type f --hid
 # Debug variable - enable by setting non-empty value
 export QUIET=${INPUT_QUIET:-}
 
-# Files or paths that will be checked
+# Directories that will be searched for Markdown files
 export SEARCH_PATHS=${INPUT_SEARCH_PATHS:-}
 
 # Debug variable - enable by setting non-empty value
@@ -69,7 +69,13 @@ fi
 echo "${EXCLUDE}" > /tmp/fd_exclude_file
 
 # shellcheck disable=SC2086
-mapfile -d '' MARKDOWN_FILE_ARRAY < <(fd ${FD_CMD_PARAMS} --ignore-file /tmp/fd_exclude_file ${SEARCH_PATHS})
+fd ${FD_CMD_PARAMS} --ignore-file /tmp/fd_exclude_file ${SEARCH_PATHS} > /tmp/fd_files
+mapfile -d '' MARKDOWN_FILE_ARRAY < /tmp/fd_files
+# Without file names markdown-link-check reads stdin and passes with 0 links checked
+if [ "${#MARKDOWN_FILE_ARRAY[@]}" -eq 0 ]; then
+  print_error "No Markdown files found"
+  exit 1
+fi
 
 print_info "Running: markdown-link-check ${MARKDOWN_LINK_CHECK_CMD_PARAMS[*]} ${MARKDOWN_FILE_ARRAY[*]}"
 markdown-link-check "${MARKDOWN_LINK_CHECK_CMD_PARAMS[@]}" "${MARKDOWN_FILE_ARRAY[@]}"

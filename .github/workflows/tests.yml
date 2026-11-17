@@ -79,3 +79,15 @@ jobs:
             tests/test1
             tests/test2
           verbose: true
+
+      - name: Test 5 - Excluding all files - must fail with "No Markdown files found"
+        id: test5
+        continue-on-error: true
+        uses: ./ # zizmor: ignore[self-repository]
+        with:
+          exclude: "*.md"
+          search_paths: tests
+
+      - name: Test 5 must fail
+        if: steps.test5.outcome != 'failure'
+        run: exit 1
