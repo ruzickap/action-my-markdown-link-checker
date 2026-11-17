@@ -6,6 +6,7 @@ on:
     paths:
       - tests/**
       - .github/workflows/tests.yml
+      - action.yml
       - entrypoint.sh
       - Dockerfile
       - .dockerignore
@@ -14,9 +15,12 @@ on:
   push:
     branches:
       - main
+      # Renovate automerges without a PR, so it must wait for these tests
+      - chore/renovate/**
     paths:
       - tests/**
       - .github/workflows/tests.yml
+      - action.yml
       - entrypoint.sh
       - Dockerfile
       - .dockerignore
