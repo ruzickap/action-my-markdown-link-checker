@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.6.0](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.5.2...v1.6.0) (2026-11-17)
+
+
+### Features
+
+* stop false green runs and make the tests able to fail ([#148](https://github.com/ruzickap/action-my-markdown-link-checker/issues/148)) ([db04732](https://github.com/ruzickap/action-my-markdown-link-checker/commit/db047324260df756370fedb8ef0ce812264bd9ef))
+
+
+### Bug Fixes
+
+* pin npm dependencies by hash in Dockerfile ([#144](https://github.com/ruzickap/action-my-markdown-link-checker/issues/144)) ([b4ca6db](https://github.com/ruzickap/action-my-markdown-link-checker/commit/b4ca6db0283326604d2a8cee87af68f985db735c))
+
 ## [1.5.2](https://github.com/ruzickap/action-my-markdown-link-checker/compare/v1.5.1...v1.5.2) (2026-10-13)
 
 
