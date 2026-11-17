@@ -34,8 +34,8 @@ When changing inputs, keep **four places in sync**: `action.yml` inputs,
   makes the Action ignore `exclude` and `search_paths` entirely.
 - **`keep-sorted` blocks**: several files (`.dockerignore`, `.gitignore`,
   `.mega-linter.yml`, `.github/workflows/stale.yml`) wrap lists in
-  `# keep-sorted start` / `# keep-sorted end`. Entries inside MUST stay
-  alphabetically sorted or MegaLinter fails.
+  `keep-sorted` start/end comments. Entries inside MUST stay alphabetically
+  sorted or MegaLinter fails.
 - Shell scripts use `set -Eeuo pipefail` and an `ERR` trap; preserve that.
 
 ## CI quirks (easy to trip over)
