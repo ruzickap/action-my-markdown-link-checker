@@ -1,3 +1,3 @@
 # Exclude Markdown file
 
-[https://gmail.com](https://gmail.com)
+[https://non-existing-domain.invalid](https://non-existing-domain.invalid)

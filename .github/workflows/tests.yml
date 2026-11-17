@@ -6,6 +6,7 @@ on:
     paths:
       - tests/**
       - .github/workflows/tests.yml
+      - action.yml
       - entrypoint.sh
       - Dockerfile
       - .dockerignore
@@ -14,9 +15,12 @@ on:
   push:
     branches:
       - main
+      # Renovate automerges without a PR, so it must wait for these tests
+      - chore/renovate/**
     paths:
       - tests/**
       - .github/workflows/tests.yml
+      - action.yml
       - entrypoint.sh
       - Dockerfile
       - .dockerignore
@@ -33,27 +37,29 @@ jobs:
         with:
           persist-credentials: false
 
+      # shortcut: zizmor wants "uses: $/" in these steps, but actionlint 1.7.12
+      # rejects it. Drop the zizmor ignores once actionlint supports "$/".
       - name: Test 1 - Check done in tests/test2 - tests/test2/normal.md
         # Unpinned Actions Full Length Commit SHA
-        uses: ./
+        uses: ./ # zizmor: ignore[self-repository]
         with:
           debug: true
           search_paths: tests/test2
 
       - name: Test 2 - Check with "exclude", "search_paths" and "quiet" - tests/test2/normal.md
-        uses: ./
+        uses: ./ # zizmor: ignore[self-repository]
         with:
           exclude: |
             CHANGELOG.md
-            test1/excluded_file.md
+            tests/test1/excluded_file.md
             bad.md
-            tests/test3-multiple-files/
           search_paths: tests/
           quiet: true
 
-      - name: Test 3 - Check "all" files
+      - name: Test 3 - Check "all" files - must fail on the dead links
+        id: test3
         continue-on-error: true
-        uses: ./
+        uses: ./ # zizmor: ignore[self-repository]
         with:
           debug: true
           search_paths: tests
@@ -64,16 +70,28 @@ jobs:
           {
             "ignorePatterns": [
               {
-                "pattern": "^https://non-existing-domain.com"
+                "pattern": "^https://non-existing-domain.invalid"
               }
             ]
           }
           EOF
 
-      - name: Test 4 - Check with "search_paths", "verbose" and ".mlc_config.json" - "https://non-existing-domain.com" is ignored
-        uses: ./
+      - name: Test 4 - Check with "search_paths", "verbose" and ".mlc_config.json" - "https://non-existing-domain.invalid" is ignored
+        uses: ./ # zizmor: ignore[self-repository]
         with:
           search_paths: |
             tests/test1
             tests/test2
           verbose: true
+
+      - name: Test 5 - Excluding all files - must fail with "No Markdown files found"
+        id: test5
+        continue-on-error: true
+        uses: ./ # zizmor: ignore[self-repository]
+        with:
+          exclude: "*.md"
+          search_paths: tests
+
+      - name: Test 3 and Test 5 must fail
+        if: steps.test3.outcome != 'failure' || steps.test5.outcome != 'failure'
+        run: exit 1

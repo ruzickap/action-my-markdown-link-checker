@@ -5,7 +5,6 @@
 [![release](https://img.shields.io/github/release/ruzickap/action-my-markdown-link-checker.svg)](https://github.com/ruzickap/action-my-markdown-link-checker/releases/latest)
 [![GitHub release date](https://img.shields.io/github/release-date/ruzickap/action-my-markdown-link-checker.svg)](https://github.com/ruzickap/action-my-markdown-link-checker/releases)
 ![GitHub Actions status](https://github.com/ruzickap/action-my-markdown-link-checker/workflows/docker-image/badge.svg)
-[![Docker Hub Build Status](https://img.shields.io/docker/cloud/build/peru/my-markdown-link-checker.svg)](https://hub.docker.com/r/peru/my-markdown-link-checker)
 
 This is a GitHub Action to check Markdown files for broken links.
 This Action uses the [markdown-link-check](https://github.com/tcort/markdown-link-check)
@@ -34,15 +33,15 @@ jobs:
 
 Variables used by `action-my-markdown-link-checker` GitHub Action:
 
-| Variable        | Default                                             | Description                                                                                                                                                                |
-|-----------------|-----------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `config_file`   | `.mlc_config.json` (if exists)                      | [Config file](https://github.com/tcort/markdown-link-check#config-file-format) used by [markdown-link-check](https://github.com/tcort/markdown-link-check)                 |
-| `debug`         | (not defined)                                       | Enable debug mode for the [entrypoint.sh](entrypoint.sh) script (`set -x`) and `--verbose` for [markdown-link-check](https://github.com/tcort/markdown-link-check)         |
-| `exclude`       | (not defined)                                       | Exclude files or directories - see the [--exclude parameter](https://github.com/sharkdp/fd#excluding-specific-files-or-directories) of [fd](https://github.com/sharkdp/fd) |
-| `fd_cmd_params` | `. -0 --extension md --type f --hidden --no-ignore` | Set your own parameters for [fd](https://github.com/sharkdp/fd) command. `exclude` and `search_paths` parameters are ignored if this is set.                               |
-| `quiet`         | (not defined)                                       | Display errors only                                                                                                                                                        |
-| `search_paths`  | (not defined)                                       | By default, all `*.md` files in the entire repository are checked. This parameter allows you to specify particular directories to search.                                  |
-| `verbose`       | (not defined)                                       | Displays detailed error information                                                                                                                                        |
+| Variable        | Default                                 | Description                                                                                                                                                                                |
+|-----------------|-----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `config_file`   | `.mlc_config.json` (if exists)          | [Config file](https://github.com/tcort/markdown-link-check#config-file-format) used by [markdown-link-check](https://github.com/tcort/markdown-link-check)                                 |
+| `debug`         | (not defined)                           | Set to `true` to enable debug mode for the [entrypoint.sh](entrypoint.sh) script (`set -x`) and `--verbose` for [markdown-link-check](https://github.com/tcort/markdown-link-check)        |
+| `exclude`       | (not defined)                           | Exclude files or directories, one [gitignore-style](https://git-scm.com/docs/gitignore#_pattern_format) pattern per line. Paths are relative to the repository root, not to `search_paths` |
+| `fd_cmd_params` | `. -0 --extension md --type f --hidden` | Replaces the default [fd](https://github.com/sharkdp/fd) options. `exclude` and `search_paths` are still added. Keep `-0` in it.                                                           |
+| `quiet`         | (not defined)                           | Set to `true` to display errors only                                                                                                                                                       |
+| `search_paths`  | (not defined)                           | By default, all `*.md` files in the repository are checked, except the ones ignored by `.gitignore`. This parameter allows you to specify particular directories to search.                |
+| `verbose`       | (not defined)                           | Set to `true` to display detailed error information                                                                                                                                        |
 
 None of the parameters listed above are mandatory.
 
@@ -68,7 +67,7 @@ on:
 
 jobs:
   markdown-link-check:
-  name: Check markdown files for broken links
+    name: Check markdown files for broken links
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -97,9 +96,6 @@ jobs:
 
       - name: Markdown links check - simple example
         uses: ruzickap/action-my-markdown-link-checker@v1
-
-      - name: Markdown links check using pre-built container
-        uses: docker://peru/my-markdown-link-checker@v1
 ```
 
 Example of Periodic Execution (Cron Job):

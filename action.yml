@@ -11,14 +11,14 @@ inputs:
   config_file:
     description: "markdown-link-check config file"
   debug:
-    description: "Debug mode"
+    description: 'Debug mode - set to "true" to enable'
   exclude:
     description: "Exclude files or directories"
   fd_cmd_params:
-    description: 'Command-line parameters for the fd command. The "exclude" and "search_paths" parameters are ignored if this is set.'
+    description: 'Replaces the default fd options. The "exclude" and "search_paths" parameters are still added. Keep "-0" in it.'
   quiet:
-    description: "Quiet mode for markdown-link-check"
+    description: 'Quiet mode for markdown-link-check - set to "true" to enable'
   search_paths:
     description: 'Set paths that should be recursively scanned for Markdown files (*.md) and linted. By default, all "*.md" files are checked.'
   verbose:
-    description: "Verbose mode for markdown-link-check"
+    description: 'Verbose mode for markdown-link-check - set to "true" to enable'
