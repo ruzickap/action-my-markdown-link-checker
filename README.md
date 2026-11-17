@@ -5,7 +5,6 @@
 [![release](https://img.shields.io/github/release/ruzickap/action-my-markdown-link-checker.svg)](https://github.com/ruzickap/action-my-markdown-link-checker/releases/latest)
 [![GitHub release date](https://img.shields.io/github/release-date/ruzickap/action-my-markdown-link-checker.svg)](https://github.com/ruzickap/action-my-markdown-link-checker/releases)
 ![GitHub Actions status](https://github.com/ruzickap/action-my-markdown-link-checker/workflows/docker-image/badge.svg)
-[![Docker Hub Build Status](https://img.shields.io/docker/cloud/build/peru/my-markdown-link-checker.svg)](https://hub.docker.com/r/peru/my-markdown-link-checker)
 
 This is a GitHub Action to check Markdown files for broken links.
 This Action uses the [markdown-link-check](https://github.com/tcort/markdown-link-check)
@@ -68,7 +67,7 @@ on:
 
 jobs:
   markdown-link-check:
-  name: Check markdown files for broken links
+    name: Check markdown files for broken links
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -97,9 +96,6 @@ jobs:
 
       - name: Markdown links check - simple example
         uses: ruzickap/action-my-markdown-link-checker@v1
-
-      - name: Markdown links check using pre-built container
-        uses: docker://peru/my-markdown-link-checker@v1
 ```
 
 Example of Periodic Execution (Cron Job):
